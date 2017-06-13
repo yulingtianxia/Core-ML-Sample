@@ -15,7 +15,7 @@ struct VideoSpec {
     var size: CGSize?
 }
 
-typealias ImageBufferHandler = ((_ imageBuffer: CVPixelBuffer, _ timestamp: CMTime, _ outputBuffer: CVPixelBuffer?) -> ())
+typealias ImageBufferHandler = ((_ imageBuffer: CMSampleBuffer) -> ())
 
 class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
 
@@ -118,10 +118,9 @@ class VideoCapture: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
             return
         }
         
-        if let imageBufferHandler = imageBufferHandler, let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) , connection == videoConnection
+        if let imageBufferHandler = imageBufferHandler
         {
-            let timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-            imageBufferHandler(imageBuffer, timestamp, nil)
+            imageBufferHandler(sampleBuffer)
         }
     }
 }
