@@ -27,7 +27,27 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MPW-dG-rVE">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qdg-1O-NKq">
+                                        <rect key="frame" x="318" y="553" width="51" height="31"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vision" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyK-aH-yyg">
+                                        <rect key="frame" x="263.5" y="558" width="46.5" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="KMT-Ze-6dK"/>
+                                            <constraint firstAttribute="width" constant="46.5" id="XB0-OT-bio"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="qdg-1O-NKq" secondAttribute="trailing" constant="8" id="c54-zn-nxu"/>
+                                    <constraint firstItem="qdg-1O-NKq" firstAttribute="leading" secondItem="uyK-aH-yyg" secondAttribute="trailing" constant="8" id="thV-tc-dyS"/>
+                                    <constraint firstItem="uyK-aH-yyg" firstAttribute="centerY" secondItem="qdg-1O-NKq" secondAttribute="centerY" id="uKu-Y1-Pac"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xc3-W5-qAq">
                                 <rect key="frame" x="4" y="612" width="367" height="51"/>
@@ -60,6 +80,7 @@
                             <constraint firstItem="MPW-dG-rVE" firstAttribute="top" secondItem="Cze-I2-EGa" secondAttribute="bottom" id="I48-Xy-1Mx"/>
                             <constraint firstAttribute="bottom" secondItem="MPW-dG-rVE" secondAttribute="bottom" id="N7z-Ew-IAo"/>
                             <constraint firstItem="Z5a-YL-kYA" firstAttribute="top" secondItem="xc3-W5-qAq" secondAttribute="bottom" constant="4" id="Q6h-tE-Uil"/>
+                            <constraint firstItem="xc3-W5-qAq" firstAttribute="top" secondItem="qdg-1O-NKq" secondAttribute="bottom" constant="8" id="f8w-o7-6xF"/>
                             <constraint firstItem="MPW-dG-rVE" firstAttribute="leading" secondItem="f5H-zY-hKe" secondAttribute="leading" id="kVi-v1-w6X"/>
                             <constraint firstItem="xc3-W5-qAq" firstAttribute="leading" secondItem="f5H-zY-hKe" secondAttribute="leading" constant="4" id="qBL-IY-3ly"/>
                         </constraints>
@@ -67,6 +88,7 @@
                     <connections>
                         <outlet property="predictLabel" destination="hpR-SF-YSn" id="ac2-lY-Lsw"/>
                         <outlet property="previewView" destination="MPW-dG-rVE" id="6ZR-uF-fDC"/>
+                        <outlet property="visionSwitch" destination="qdg-1O-NKq" id="466-ph-1qm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8f5-Pe-2NG" userLabel="First Responder" sceneMemberID="firstResponder"/>
