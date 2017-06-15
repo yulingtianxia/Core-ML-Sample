@@ -102,6 +102,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
         self.requests = [classificationRequest]
     }
     
+    
+    /// only support back camera
     var exifOrientationFromDeviceOrientation: Int32 {
         let exifOrientation: DeviceOrientation
         enum DeviceOrientation: Int32 {
@@ -127,13 +129,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
         return exifOrientation.rawValue
     }
     
+    
+    /// resize CVPixelBuffer
+    ///
+    /// - Parameter pixelBuffer: CVPixelBuffer by camera output
+    /// - Returns: CVPixelBuffer with size (299, 299)
     func resize(pixelBuffer: CVPixelBuffer) -> CVPixelBuffer? {
+        let imageSide = 299
         var ciImage = CIImage(cvPixelBuffer: pixelBuffer, options: nil)
-        let transform = CGAffineTransform(scaleX: 299.0 / CGFloat(CVPixelBufferGetWidth(pixelBuffer)), y: 299.0 / CGFloat(CVPixelBufferGetHeight(pixelBuffer)))
-        ciImage = ciImage.applying(transform).cropping(to: CGRect(x: 0, y: 0, width: 299, height: 299))
+        let transform = CGAffineTransform(scaleX: CGFloat(imageSide) / CGFloat(CVPixelBufferGetWidth(pixelBuffer)), y: CGFloat(imageSide) / CGFloat(CVPixelBufferGetHeight(pixelBuffer)))
+        ciImage = ciImage.applying(transform).cropping(to: CGRect(x: 0, y: 0, width: imageSide, height: imageSide))
         let ciContext = CIContext()
         var resizeBuffer: CVPixelBuffer?
-        CVPixelBufferCreate(kCFAllocatorDefault, 299, 299, CVPixelBufferGetPixelFormatType(pixelBuffer), nil, &resizeBuffer)
+        CVPixelBufferCreate(kCFAllocatorDefault, imageSide, imageSide, CVPixelBufferGetPixelFormatType(pixelBuffer), nil, &resizeBuffer)
         ciContext.render(ciImage, to: resizeBuffer!)
         return resizeBuffer
     }
