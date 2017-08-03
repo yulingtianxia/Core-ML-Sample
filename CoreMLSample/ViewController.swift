@@ -71,7 +71,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
             requestOptions = [.cameraIntrinsics:cameraIntrinsicData]
         }
         
-        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: self.exifOrientationFromDeviceOrientation, options: requestOptions)
+        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: CGImagePropertyOrientation(rawValue: UInt32(self.exifOrientationFromDeviceOrientation))!, options: requestOptions)
         do {
             try imageRequestHandler.perform(self.requests)
         } catch {
@@ -97,7 +97,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
                 self.predictLabel.text = classifications.joined(separator: "\n")
             }
         }
-        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOptionCenterCrop
+        classificationRequest.imageCropAndScaleOption = VNImageCropAndScaleOption.centerCrop
         
         self.requests = [classificationRequest]
     }
@@ -138,7 +138,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate {
         let imageSide = 299
         var ciImage = CIImage(cvPixelBuffer: pixelBuffer, options: nil)
         let transform = CGAffineTransform(scaleX: CGFloat(imageSide) / CGFloat(CVPixelBufferGetWidth(pixelBuffer)), y: CGFloat(imageSide) / CGFloat(CVPixelBufferGetHeight(pixelBuffer)))
-        ciImage = ciImage.applying(transform).cropping(to: CGRect(x: 0, y: 0, width: imageSide, height: imageSide))
+        ciImage = ciImage.transformed(by: transform).cropped(to: CGRect(x: 0, y: 0, width: imageSide, height: imageSide))
         let ciContext = CIContext()
         var resizeBuffer: CVPixelBuffer?
         CVPixelBufferCreate(kCFAllocatorDefault, imageSide, imageSide, CVPixelBufferGetPixelFormatType(pixelBuffer), nil, &resizeBuffer)
